@@ -4,6 +4,8 @@ from pydicom.filereader import dcmread
 import matplotlib.pyplot as plt
 
 # puse los dicoms adentro del proyecto
+# les recomiendo hacer lo mismo, el git está configurado
+# para ignorar la carpeta DICOMS, entonces no se van a subir
 path = '../DICOMS/Rayos X/azc201047013'
 
 ds= dcmread(path+'/DICOMDIR')
