@@ -8,9 +8,8 @@ import { useSystem } from '@ohif/core/src';
 const DEFAULT_SIZE = 512;
 const MAX_TEXTURE_SIZE = 10000;
 const VIEWPORT_ID = 'cornerstone-viewport-download-form';
-const DEFAULT_FPS = 10;
 
-const FILE_TYPE_OPTIONS = [
+let FILE_TYPE_OPTIONS = [
   { value: 'jpg', label: 'JPG' },
   { value: 'png', label: 'PNG' },
   { value: 'webm', label: 'WebM Video' },
@@ -128,6 +127,11 @@ const CornerstoneViewportDownloadForm = ({ hide, activeViewportId: activeViewpor
 
     const { viewport } = getEnabledElement(activeViewportElement);
     const ids = viewport.getImageIds();
+    if (ids.length ==1){
+      //show error
+      alert('No se puede crear un video con solo una imagen');
+      return;
+    }
     const container = document.querySelector(`div[data-viewport-uid="default"]`);
     if (!container) return;
     const canvas = container.querySelector('canvas');
@@ -150,7 +154,7 @@ const CornerstoneViewportDownloadForm = ({ hide, activeViewportId: activeViewpor
     recorder.stop();
 
     recorder.onstop = async () => {
-        downloadBlob(new Blob(chunks, { type: 'video/webm' }), filename, 'webm');
+      downloadBlob(new Blob(chunks, { type: 'video/webm' }), filename, 'webm');
     };
   };
 
