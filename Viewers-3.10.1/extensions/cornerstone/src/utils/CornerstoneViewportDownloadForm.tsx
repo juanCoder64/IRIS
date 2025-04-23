@@ -9,74 +9,58 @@ const DEFAULT_SIZE = 512;
 const MAX_TEXTURE_SIZE = 10000;
 const VIEWPORT_ID = 'cornerstone-viewport-download-form';
 
-const FILE_TYPE_OPTIONS = [
-  {
-    value: 'jpg',
-    label: 'JPG',
-  },
-  {
-    value: 'png',
-    label: 'PNG',
-  },
+let FILE_TYPE_OPTIONS = [
+  { value: 'jpg', label: 'JPG' },
+  { value: 'png', label: 'PNG' },
+  { value: 'webm', label: 'WebM Video' },
 ];
 
-type ViewportDownloadFormProps = {
-  hide: () => void;
-  activeViewportId: string;
-};
+// Helper to trigger a download of any Blob
+function downloadBlob(blob, filename, type) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${filename}.${type}`;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => {
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, 100);
+}
 
-const CornerstoneViewportDownloadForm = ({
-  hide,
-  activeViewportId: activeViewportIdProp,
-}: ViewportDownloadFormProps) => {
+const CornerstoneViewportDownloadForm = ({ hide, activeViewportId: activeViewportIdProp }) => {
   const { servicesManager } = useSystem();
   const { customizationService, cornerstoneViewportService } = servicesManager.services;
   const [showAnnotations, setShowAnnotations] = useState(true);
-  const [viewportDimensions, setViewportDimensions] = useState({
-    width: DEFAULT_SIZE,
-    height: DEFAULT_SIZE,
-  });
+  const [viewportDimensions, setViewportDimensions] = useState({ width: DEFAULT_SIZE, height: DEFAULT_SIZE });
 
-  const warningState = customizationService.getCustomization('viewportDownload.warningMessage') as {
-    enabled: boolean;
-    value: string;
-  };
-
+  const warningState = customizationService.getCustomization('viewportDownload.warningMessage');
   const refViewportEnabledElementOHIF = OHIFgetEnabledElement(activeViewportIdProp);
   const activeViewportElement = refViewportEnabledElementOHIF?.element;
-  const { viewportId: activeViewportId, renderingEngineId } =
-    getEnabledElement(activeViewportElement);
+  const { viewportId: activeViewportId, renderingEngineId } = getEnabledElement(activeViewportElement);
 
   const renderingEngine = cornerstoneViewportService.getRenderingEngine();
   const toolGroup = ToolGroupManager.getToolGroupForViewport(activeViewportId, renderingEngineId);
 
+  // Preserve original tool modes
   useEffect(() => {
-    const toolModeAndBindings = Object.keys(toolGroup.toolOptions).reduce((acc, toolName) => {
-      const tool = toolGroup.toolOptions[toolName];
-      const { mode, bindings } = tool;
-
-      return {
-        ...acc,
-        [toolName]: { mode, bindings },
-      };
-    }, {});
-
+    const savedModes = Object.entries(toolGroup.toolOptions).map(([name, opts]) => ({
+      name,
+      mode: opts.mode,
+      bindings: opts.bindings,
+    }));
     return () => {
-      Object.keys(toolModeAndBindings).forEach(toolName => {
-        const { mode, bindings } = toolModeAndBindings[toolName];
-        toolGroup.setToolMode(toolName, mode, { bindings });
+      savedModes.forEach(({ name, mode, bindings }) => {
+        toolGroup.setToolMode(name, mode, { bindings });
       });
     };
   }, []);
 
-  const handleEnableViewport = (viewportElement: HTMLElement) => {
-    if (!viewportElement) {
-      return;
-    }
-
+  const handleEnableViewport = (viewportElement) => {
+    if (!viewportElement) return;
     const { viewport } = getEnabledElement(activeViewportElement);
-
-    const viewportInput = {
+    renderingEngine.enableElement({
       viewportId: VIEWPORT_ID,
       element: viewportElement,
       type: viewport.type,
@@ -84,164 +68,129 @@ const CornerstoneViewportDownloadForm = ({
         background: viewport.defaultOptions.background,
         orientation: viewport.defaultOptions.orientation,
       },
-    };
-
-    renderingEngine.enableElement(viewportInput);
-  };
-
-  const handleDisableViewport = async () => {
-    renderingEngine.disableElement(VIEWPORT_ID);
-  };
-
-  const handleLoadImage = async (width: number, height: number) => {
-    if (!activeViewportElement) {
-      return;
-    }
-
-    const activeViewportEnabledElement = getEnabledElement(activeViewportElement);
-    if (!activeViewportEnabledElement) {
-      return;
-    }
-
-    const segmentationRepresentations =
-      segmentation.state.getViewportSegmentationRepresentations(activeViewportId);
-
-    const { viewport } = activeViewportEnabledElement;
-    const downloadViewport = renderingEngine.getViewport(VIEWPORT_ID);
-
-    try {
-      if (downloadViewport instanceof StackViewport) {
-        const imageId = viewport.getCurrentImageId();
-        const properties = viewport.getProperties();
-
-        await downloadViewport.setStack([imageId]);
-        downloadViewport.setProperties(properties);
-      } else if (downloadViewport instanceof BaseVolumeViewport) {
-        const volumeIds = viewport.getAllVolumeIds();
-        downloadViewport.setVolumes([{ volumeId: volumeIds[0] }]);
-      }
-
-      if (segmentationRepresentations.length > 0) {
-        segmentationRepresentations.forEach(segRepresentation => {
-          const { segmentationId, colorLUTIndex, type } = segRepresentation;
-          if (type === Enums.SegmentationRepresentations.Labelmap) {
-            segmentation.addLabelmapRepresentationToViewportMap({
-              [downloadViewport.id]: [
-                {
-                  segmentationId,
-                  type: Enums.SegmentationRepresentations.Labelmap,
-                  config: {
-                    colorLUTOrIndex: colorLUTIndex,
-                  },
-                },
-              ],
-            });
-          }
-
-          if (type === Enums.SegmentationRepresentations.Contour) {
-            segmentation.addContourRepresentationToViewportMap({
-              [downloadViewport.id]: [
-                {
-                  segmentationId,
-                  type: Enums.SegmentationRepresentations.Contour,
-                  config: {
-                    colorLUTOrIndex: colorLUTIndex,
-                  },
-                },
-              ],
-            });
-          }
-        });
-      }
-
-      return {
-        width: Math.min(width || DEFAULT_SIZE, MAX_TEXTURE_SIZE),
-        height: Math.min(height || DEFAULT_SIZE, MAX_TEXTURE_SIZE),
-      };
-    } catch (error) {
-      console.error('Error loading image:', error);
-    }
-  };
-
-  const handleToggleAnnotations = (show: boolean) => {
-    const activeViewportEnabledElement = getEnabledElement(activeViewportElement);
-    if (!activeViewportEnabledElement) {
-      return;
-    }
-
-    const downloadViewport = renderingEngine.getViewport(VIEWPORT_ID);
-    if (!downloadViewport) {
-      return;
-    }
-
-    const { viewportId: activeViewportId, renderingEngineId } = activeViewportEnabledElement;
-    const { id: downloadViewportId } = downloadViewport;
-
-    const toolGroup = ToolGroupManager.getToolGroupForViewport(activeViewportId, renderingEngineId);
-    toolGroup.addViewport(downloadViewportId, renderingEngineId);
-
-    Object.keys(toolGroup.getToolInstances()).forEach(toolName => {
-      if (show && toolName !== 'Crosshairs') {
-        try {
-          toolGroup.setToolEnabled(toolName);
-        } catch (error) {
-          console.debug('Error enabling tool:', error);
-        }
-      } else {
-        toolGroup.setToolDisabled(toolName);
-      }
     });
   };
 
-  useEffect(() => {
-    if (viewportDimensions.width && viewportDimensions.height) {
-      setTimeout(() => {
-        handleLoadImage(viewportDimensions.width, viewportDimensions.height);
-        handleToggleAnnotations(showAnnotations);
-        // we need a resize here to make suer annotations world to canvas
-        // are properly calculated
-        renderingEngine.resize();
-        renderingEngine.render();
-      }, 100);
-    }
-  }, [viewportDimensions, showAnnotations]);
-
-  const handleDownload = async (filename: string, fileType: string) => {
-    const divForDownloadViewport = document.querySelector(
-      `div[data-viewport-uid="${VIEWPORT_ID}"]`
-    );
-
-    if (!divForDownloadViewport) {
-      console.debug('No viewport found for download');
-      return;
-    }
-
-    const canvas = await html2canvas(divForDownloadViewport as HTMLElement);
-    const link = document.createElement('a');
-    link.download = `${filename}.${fileType}`;
-    link.href = canvas.toDataURL(`image/${fileType}`, 1.0);
-    link.click();
+  const handleDisableViewport = () => {
+    renderingEngine.disableElement(VIEWPORT_ID);
   };
 
-  const ViewportDownloadFormNew = customizationService.getCustomization(
-    'ohif.captureViewportModal'
-  );
+  const handleLoadImage = async (width, height) => {
+    if (!activeViewportElement) return;
+    const { viewport } = getEnabledElement(activeViewportElement);
+    const downloadViewport = renderingEngine.getViewport(VIEWPORT_ID);
+    try {
+      if (downloadViewport instanceof StackViewport) {
+        await downloadViewport.setStack([viewport.getCurrentImageId()]);
+        downloadViewport.setProperties(viewport.getProperties());
+      } else if (downloadViewport instanceof BaseVolumeViewport) {
+        const [volumeId] = viewport.getAllVolumeIds();
+        downloadViewport.setVolumes([{ volumeId }]);
+      }
+      const reps = segmentation.state.getViewportSegmentationRepresentations(activeViewportId);
+      reps.forEach(r => {
+        const config = { colorLUTOrIndex: r.colorLUTIndex };
+        if (r.type === Enums.SegmentationRepresentations.Labelmap) {
+          segmentation.addLabelmapRepresentationToViewportMap({ [VIEWPORT_ID]: [{ ...r, config }] });
+        } else if (r.type === Enums.SegmentationRepresentations.Contour) {
+          segmentation.addContourRepresentationToViewportMap({ [VIEWPORT_ID]: [{ ...r, config }] });
+        }
+      });
+      return { width: Math.min(width, MAX_TEXTURE_SIZE), height: Math.min(height, MAX_TEXTURE_SIZE) };
+    } catch (error) {
+      console.error('Error loading download viewport:', error);
+    }
+  };
+
+  const handleToggleAnnotations = (show) => {
+    const { viewportId, renderingEngineId } = getEnabledElement(activeViewportElement);
+    const downloadViewport = renderingEngine.getViewport(VIEWPORT_ID);
+    toolGroup.addViewport(VIEWPORT_ID, renderingEngineId);
+    Object.keys(toolGroup.getToolInstances()).forEach(name => {
+      if (show) toolGroup.setToolEnabled(name);
+      else toolGroup.setToolDisabled(name);
+    });
+  };
+
+  // Re-render on size/annotation changes
+  useEffect(() => {
+    setTimeout(() => {
+      handleLoadImage(viewportDimensions.width, viewportDimensions.height);
+      handleToggleAnnotations(showAnnotations);
+      renderingEngine.resize();
+      renderingEngine.render();
+    }, 100);
+  }, [viewportDimensions, showAnnotations]);
+
+  // Record WebM with corrected duration
+  const handleDownloadVideo = async (filename) => {
+
+    const { viewport } = getEnabledElement(activeViewportElement);
+    const ids = viewport.getImageIds();
+    if (ids.length ==1){
+      //show error
+      alert('No se puede crear un video con solo una imagen');
+      return;
+    }
+    const container = document.querySelector(`div[data-viewport-uid="default"]`);
+    if (!container) return;
+    const canvas = container.querySelector('canvas');
+    if (!canvas) return;
+    const fps = Math.min(ids.length/5,70);
+    const stream = canvas.captureStream(fps);
+    const recorder = new MediaRecorder(stream, { mimeType: 'video/webm; codecs=vp8' });
+    const chunks = [];
+
+    recorder.ondataavailable = e => {  chunks.push(e.data); };
+    recorder.start();
+    if (viewport instanceof StackViewport) {
+      const delay = 1000/fps;
+      for (let i = 0; i < ids.length; i++) {
+        viewport.setImageIdIndex(i);
+        renderingEngine.render();
+        await new Promise(r => setTimeout(r, delay));
+      }
+    }
+    recorder.stop();
+
+    recorder.onstop = async () => {
+      downloadBlob(new Blob(chunks, { type: 'video/webm' }), filename, 'webm');
+    };
+  };
+
+  // Unified download handler
+  const handleDownload = async (filename, fileType) => {
+    if (fileType === 'webm') {
+      await handleDownloadVideo(filename);
+    } else {
+      const div = document.querySelector(`div[data-viewport-uid="default"]`);
+      if (!div) return;
+      const canvas = await html2canvas(div);
+      const dataUrl = canvas.toDataURL(`image/${fileType}`, 1.0);
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = `${filename}.${fileType}`;
+      a.click();
+    }
+  };
+
+  const ViewportDownloadFormNew = customizationService.getCustomization('ohif.captureViewportModal');
 
   return (
-    <ViewportDownloadFormNew
-      onClose={hide}
-      defaultSize={DEFAULT_SIZE}
-      fileTypeOptions={FILE_TYPE_OPTIONS}
-      viewportId={VIEWPORT_ID}
-      showAnnotations={showAnnotations}
-      onAnnotationsChange={setShowAnnotations}
-      dimensions={viewportDimensions}
-      onDimensionsChange={setViewportDimensions}
-      onEnableViewport={handleEnableViewport}
-      onDisableViewport={handleDisableViewport}
-      onDownload={handleDownload}
-      warningState={warningState}
-    />
+      <ViewportDownloadFormNew
+          onClose={hide}
+          defaultSize={DEFAULT_SIZE}
+          fileTypeOptions={FILE_TYPE_OPTIONS}
+          viewportId={VIEWPORT_ID}
+          showAnnotations={showAnnotations}
+          onAnnotationsChange={setShowAnnotations}
+          dimensions={viewportDimensions}
+          onDimensionsChange={setViewportDimensions}
+          onEnableViewport={handleEnableViewport}
+          onDisableViewport={handleDisableViewport}
+          onDownload={handleDownload}
+          warningState={warningState}
+      />
   );
 };
 
