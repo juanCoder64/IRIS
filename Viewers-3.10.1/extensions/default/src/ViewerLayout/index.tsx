@@ -157,23 +157,7 @@ function ViewerLayout({
           {showLoadingIndicator && <LoadingIndicatorProgress className="h-full w-full bg-black" />}
           <ResizablePanelGroup {...resizablePanelGroupProps}>
             {/* LEFT SIDEPANELS */}
-            {hasLeftPanels ? (
-              <>
-                <ResizablePanel {...resizableLeftPanelProps}>
-                  <SidePanelWithServices
-                    side="left"
-                    isExpanded={!leftPanelClosedState}
-                    servicesManager={servicesManager}
-                    {...leftPanelProps}
-                  />
-                </ResizablePanel>
-                <ResizableHandle
-                  onDragging={onHandleDragging}
-                  disabled={!leftPanelResizable}
-                  className={resizableHandleClassName}
-                />
-              </>
-            ) : null}
+
             {/* TOOLBAR + GRID */}
             <ResizablePanel {...resizableViewportGridPanelProps}>
               <div className="flex h-full flex-1 flex-col">
