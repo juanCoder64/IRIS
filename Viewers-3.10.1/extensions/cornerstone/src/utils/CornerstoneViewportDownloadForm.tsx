@@ -4,12 +4,11 @@ import { getEnabledElement, StackViewport, BaseVolumeViewport } from '@cornersto
 import { ToolGroupManager, segmentation, Enums } from '@cornerstonejs/tools';
 import { getEnabledElement as OHIFgetEnabledElement } from '../state';
 import { useSystem } from '@ohif/core/src';
-import { fixWebmDuration } from '@fix-webm-duration/fix';
 
 const DEFAULT_SIZE = 512;
 const MAX_TEXTURE_SIZE = 10000;
 const VIEWPORT_ID = 'cornerstone-viewport-download-form';
-const DEFAULT_FPS = 15;
+const DEFAULT_FPS = 10;
 
 const FILE_TYPE_OPTIONS = [
   { value: 'jpg', label: 'JPG' },
@@ -126,47 +125,32 @@ const CornerstoneViewportDownloadForm = ({ hide, activeViewportId: activeViewpor
 
   // Record WebM with corrected duration
   const handleDownloadVideo = async (filename) => {
+
+    const { viewport } = getEnabledElement(activeViewportElement);
+    const ids = viewport.getImageIds();
     const container = document.querySelector(`div[data-viewport-uid="default"]`);
     if (!container) return;
     const canvas = container.querySelector('canvas');
     if (!canvas) return;
-    const fps = DEFAULT_FPS;
+    const fps = Math.min(ids.length/5,70);
     const stream = canvas.captureStream(fps);
     const recorder = new MediaRecorder(stream, { mimeType: 'video/webm; codecs=vp8' });
     const chunks = [];
 
-    recorder.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+    recorder.ondataavailable = e => {  chunks.push(e.data); };
     recorder.start();
-
-    const { viewport } = getEnabledElement(activeViewportElement);
-    let frameCount = 0;
     if (viewport instanceof StackViewport) {
-      const ids = viewport.getImageIds();
-      const delay = 1000 / fps;
+      const delay = 1000/fps;
       for (let i = 0; i < ids.length; i++) {
         viewport.setImageIdIndex(i);
         renderingEngine.render();
-        frameCount++;
-        // eslint-disable-next-line no-await-in-loop
         await new Promise(r => setTimeout(r, delay));
       }
     }
-    // extra frame to flush
-    await new Promise(r => setTimeout(r, 200));
     recorder.stop();
 
     recorder.onstop = async () => {
-      try {
-        const badBlob = new Blob(chunks, { type: 'video/webm' });
-        // duration in ms: total frames / fps * 1000
-        const durationMs = Math.round((frameCount / fps) * 1000);
-        const goodBlob = await fixWebmDuration(badBlob, durationMs);
-        downloadBlob(goodBlob, filename, 'webm');
-      } catch (error) {
-        console.error('Error fixing WebM duration:', error);
-        // fallback to raw
         downloadBlob(new Blob(chunks, { type: 'video/webm' }), filename, 'webm');
-      }
     };
   };
 
