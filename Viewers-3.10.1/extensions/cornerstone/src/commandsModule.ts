@@ -760,7 +760,7 @@ function commandsModule({
       if (uiModalService) {
         uiModalService.show({
           content: CornerstoneViewportDownloadForm,
-          title: 'Download High Quality Image',
+          title: 'Descargar Estudio',
           contentProps: {
             activeViewportId,
             cornerstoneViewportService,
