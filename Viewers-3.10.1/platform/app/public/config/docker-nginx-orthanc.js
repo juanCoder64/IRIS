@@ -13,10 +13,12 @@ window.config = {
           target: '_blank',
           rel: 'noopener noreferrer',
           className: 'text-white underline',
-          href: 'http://radicalimaging.com',
+          href: 'https://www.salud-digna.org/',
         },
         React.createElement('img', {
           src: '/assets/LogoSaludDigna.svg',
+          height: 100,
+          width: 100,
         })
       );
     },
