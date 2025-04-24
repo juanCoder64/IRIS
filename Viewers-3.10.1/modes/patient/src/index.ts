@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import { id } from './id';
-import initToolGroups from './initToolGroups';
-import toolbarButtons from './toolbarButtons';
+import initToolGroupsPat from './initToolGroupsPat';
+import toolbarButtonsPat from './toolbarButtonsPat';
 
 // Allow this mode by excluding non-imaging modalities such as SR, SEG
 // Also, SM is not a simple imaging modalities, so exclude it.
@@ -76,8 +76,8 @@ function modeFactory({ modeConfiguration }) {
     // TODO: We're using this as a route segment
     // We should not be.
     id,
-    routeName: 'viewer',
-    displayName: i18n.t('Modes:Basic Viewer'),
+    routeName: 'pat-mode',
+    displayName: i18n.t('Modes:Patient'),
     /**
      * Lifecycle hooks
      */
@@ -88,9 +88,9 @@ function modeFactory({ modeConfiguration }) {
       measurementService.clearMeasurements();
 
       // Init Default and SR ToolGroups
-      initToolGroups(extensionManager, toolGroupService, commandsManager);
+      initToolGroupsPat(extensionManager, toolGroupService, commandsManager);
 
-      toolbarService.addButtons(toolbarButtons);
+      toolbarService.addButtons(toolbarButtonsPat);
       toolbarService.createButtonSection('primary', [
         'MeasurementTools',
         'Zoom',
@@ -209,7 +209,7 @@ function modeFactory({ modeConfiguration }) {
     },
     routes: [
       {
-        path: 'longitudinal',
+        path: 'pat-mode',
         /*init: ({ servicesManager, extensionManager }) => {
           //defaultViewerRouteInit
         },*/
@@ -287,4 +287,4 @@ const mode = {
 };
 
 export default mode;
-export { initToolGroups, toolbarButtons };
+export { initToolGroupsPat, toolbarButtonsPat };

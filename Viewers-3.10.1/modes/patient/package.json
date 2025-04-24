@@ -1,11 +1,11 @@
 {
-  "name": "@ohif/mode-longitudinal",
-  "version": "3.10.1",
+  "name": "@ohif/mode-pat",
+  "version": "0.0.1",
   "description": "Longitudinal Workflow",
-  "author": "OHIF",
+  "author": "",
   "license": "MIT",
   "repository": "OHIF/Viewers",
-  "main": "dist/ohif-mode-longitudinal.js",
+  "main": "dist/ohif-mode-pat.js",
   "module": "src/index.ts",
   "engines": {
     "node": ">=14",

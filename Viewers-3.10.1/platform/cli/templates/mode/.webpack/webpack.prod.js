@@ -39,11 +39,17 @@ const config = {
         amd: '@ohif/ui',
         root: '@ohif/ui',
       },
-      '@ohif/mode-longitudinal': {
-        commonjs2: '@ohif/mode-longitudinal',
-        commonjs: '@ohif/mode-longitudinal',
-        amd: '@ohif/mode-longitudinal',
-        root: '@ohif/mode-longitudinal',
+      '@ohif/mode-doc': {
+        commonjs2: '@ohif/mode-doc',
+        commonjs: '@ohif/mode-doc',
+        amd: '@ohif/mode-doc',
+        root: '@ohif/mode-doc',
+      },
+      '@ohif/mode-pat': {
+        commonjs2: '@ohif/mode-pat',
+        commonjs: '@ohif/mode-pat',
+        amd: '@ohif/mode-pat',
+        root: '@ohif/mode-pat',
       }
     },
   ],
