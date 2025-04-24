@@ -106,7 +106,7 @@ const ToolButtonListDropDown = React.forwardRef<HTMLDivElement, ToolButtonListDr
         >
           <Icons.ByName
             name="chevron-down"
-            className="text-primary h-5 w-5"
+            className="h-5 w-5 text-black hover:text-green-500"
           />
         </Button>
       </DropdownMenuTrigger>
@@ -192,7 +192,7 @@ const ToolButtonListDivider = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn('bg-primary h-5 w-px self-center', className)}
+    className={cn('h-5 w-px self-center bg-black', className)}
     {...props}
   />
 ));

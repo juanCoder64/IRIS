@@ -111,8 +111,8 @@ module.exports = {
       },
       overlay: 'rgba(0, 0, 0, 0.8)',
       transparent: 'transparent',
-      black: '#ffffff',
-      white: '#000000',
+      black: '#000000',
+      white: '#ffffff',
       initial: 'initial',
       inherit: 'inherit',
 

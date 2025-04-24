@@ -5,8 +5,8 @@ import { Button } from '../Button';
 import { cn } from '../../lib/utils';
 
 const baseClasses = '!rounded-lg inline-flex items-center justify-center';
-const defaultClasses = 'bg-transparent text-foreground/80 hover:bg-background hover:text-highlight';
-const activeClasses = 'bg-highlight text-background hover:!bg-highlight/80';
+const defaultClasses = 'bg-transparent text-blue-950 hover:bg-[#050614] hover:text-green-500';
+const activeClasses = 'bg-green-500 text-background hover:bg-green-500';
 const disabledClasses =
   'text-common-bright hover:bg-primary-dark hover:text-primary-light opacity-40 cursor-not-allowed';
 

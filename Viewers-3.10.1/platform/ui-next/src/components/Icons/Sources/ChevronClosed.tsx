@@ -29,7 +29,7 @@ export const ChevronClosed = (props: IconProps) => (
       ></rect>
       <polyline
         id="Path-2"
-        stroke="currentColor"
+        stroke="#000000"
         transform="translate(12.0902, 12.0451) rotate(90) translate(-12.0902, -12.0451)"
         points="8 10 12.090229 14.090229 16.1804581 10"
       ></polyline>

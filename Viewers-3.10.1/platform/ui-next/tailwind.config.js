@@ -112,6 +112,9 @@ module.exports = {
         highlight: '#5ACCE6',
         hover: 'rgb(255,255,255)',
       },
+      custom: {
+        hola: '#000000',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],

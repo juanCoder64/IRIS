@@ -134,7 +134,7 @@ const Trigger = ({
           ? 'text-common-bright hover:bg-primary-dark hover:text-primary-light cursor-not-allowed opacity-40'
           : isOpen
             ? 'bg-background text-foreground/80'
-            : 'text-foreground/80 hover:bg-background hover:text-highlight bg-transparent',
+            : 'hover:bg-background bg-transparent text-black hover:text-green-500',
         className
       )}
       variant="ghost"

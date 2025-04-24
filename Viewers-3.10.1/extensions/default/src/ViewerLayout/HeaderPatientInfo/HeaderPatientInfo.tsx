@@ -40,28 +40,28 @@ function HeaderPatientInfo({ servicesManager, appConfig }: withAppTypes) {
 
   return (
     <div
-      className="hover:bg-primary-dark flex cursor-pointer items-center justify-center gap-1 rounded-lg"
+      className="flex cursor-pointer items-center justify-center gap-1 rounded-lg hover:bg-green-500"
       onClick={handleOnClick}
     >
       {isMixedPatients ? (
-        <Icons.MultiplePatients className="text-primary" />
+        <Icons.MultiplePatients className="text-black" />
       ) : (
-        <Icons.Patient className="text-primary" />
+        <Icons.Patient className="text-black" />
       )}
       <div className="flex flex-col justify-center">
         {expanded ? (
           <>
-            <div className="self-start text-[13px] font-bold text-white">
+            <div className="self-start text-[13px] font-bold text-black">
               {formattedPatientName}
             </div>
-            <div className="text-aqua-pale flex gap-2 text-[11px]">
+            <div className="flex gap-2 text-[11px] text-black">
               <div>{formattedPatientID}</div>
               <div>{patientInfo.PatientSex}</div>
               <div>{patientInfo.PatientDOB}</div>
             </div>
           </>
         ) : (
-          <div className="text-primary self-center text-[13px]">
+          <div className="self-center text-[13px] text-black">
             {isMixedPatients ? 'Multiple Patients' : 'Patient'}
           </div>
         )}
