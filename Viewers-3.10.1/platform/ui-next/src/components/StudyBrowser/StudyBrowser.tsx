@@ -60,7 +60,7 @@ const StudyBrowser = ({
   };
 
   return (
-    <ScrollArea>
+    <ScrollArea className="bg-white">
       <div
         className="bg-bkg-low flex flex-1 flex-col gap-[4px]"
         data-cy={'studyBrowser-panel'}

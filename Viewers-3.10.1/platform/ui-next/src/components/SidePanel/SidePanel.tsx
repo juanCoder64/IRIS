@@ -58,7 +58,7 @@ const closeIconWidth = 30;
 const gridHorizontalPadding = 10;
 const tabSpacerWidth = 2;
 
-const baseClasses = 'bg-black border-black justify-start box-content flex flex-col';
+const baseClasses = 'bg-white border-black justify-start box-content flex flex-col';
 
 const openStateIconName = {
   left: 'SidePanelCloseLeft',
@@ -112,7 +112,7 @@ const getTabClassNames = (
   isTabDisabled: boolean
 ) =>
   classnames('h-[28px] mb-[2px] cursor-pointer text-white bg-black', {
-    'hover:text-primary': !isActiveTab && !isTabDisabled,
+    'hover:text-black': !isActiveTab && !isTabDisabled,
     'rounded-l': tabIndex % numColumns === 0,
     'rounded-r': (tabIndex + 1) % numColumns === 0 || tabIndex === numTabs - 1,
   });
@@ -174,8 +174,8 @@ const createBaseStyle = (expandedWidth: number) => {
     // To align the top of the side panel with the top of the viewport grid, use position relative and offset the
     // top by the same top offset as the viewport grid. Also adjust the height so that there is no overflow.
     position: 'relative',
-    top: '0.2%',
-    height: '99.8%',
+    top: '0%',
+    height: '100%',
   };
 };
 
@@ -294,7 +294,7 @@ const SidePanel = ({
           data-cy={`side-panel-header-${side}`}
         >
           <Icons.NavigationPanelReveal
-            className={classnames('text-primary', side === 'left' && 'rotate-180 transform')}
+            className={classnames('text-black', side === 'left' && 'rotate-180 transform')}
           />
         </div>
         <div className={classnames('mt-3 flex flex-col space-y-3')}>
@@ -304,14 +304,14 @@ const SidePanel = ({
                 <div
                   id={`${childComponent.name}-btn`}
                   data-cy={`${childComponent.name}-btn`}
-                  className="text-primary hover:cursor-pointer"
+                  className="text-black hover:cursor-pointer"
                   onClick={() => {
                     return childComponent.disabled ? null : updateActiveTabIndex(index, true);
                   }}
                 >
                   {React.createElement(Icons[childComponent.iconName] || Icons.MissingIcon, {
                     className: classnames({
-                      'text-primary': true,
+                      'text-black': true,
                       'ohif-disabled': childComponent.disabled,
                     }),
                     style: {
@@ -352,7 +352,7 @@ const SidePanel = ({
         data-cy={`side-panel-header-${side}`}
       >
         {React.createElement(Icons[openStateIconName[side]] || Icons.MissingIcon, {
-          className: 'text-primary',
+          className: 'text-top',
         })}
       </div>
     );
@@ -365,7 +365,7 @@ const SidePanel = ({
       <>
         {getCloseIcon()}
         <div className={classnames('flex grow justify-center')}>
-          <div className={classnames('bg-primary-dark text-primary flex flex-wrap')}>
+          <div className={classnames('bg-primary-dark text-black flex flex-wrap')}>
             {tabs.map((tab, tabIndex) => {
               const { disabled } = tab;
               return (
@@ -401,7 +401,7 @@ const SidePanel = ({
                         >
                           {React.createElement(Icons[tab.iconName] || Icons.MissingIcon, {
                             className: classnames({
-                              'text-primary': true,
+                              'text-black': true,
                               'ohif-disabled': disabled,
                             }),
                             style: {
@@ -429,7 +429,7 @@ const SidePanel = ({
     return (
       <div
         className={classnames(
-          'text-primary flex grow cursor-pointer select-none justify-center self-center text-[13px]'
+          'flex grow cursor-pointer select-none justify-center self-center text-[13px] text-black'
         )}
         data-cy={`${tabs[0].name}-btn`}
         onClick={() => updatePanelOpen(!panelOpen)}
