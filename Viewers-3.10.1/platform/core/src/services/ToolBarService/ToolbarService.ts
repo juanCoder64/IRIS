@@ -538,13 +538,13 @@ export default class ToolbarService extends PubSubService {
       return;
     }
 
-    const toolbarButtonsPatient = this.getButtonSection(buttonSection);
+    const toolbarButtons = this.getButtonSection(buttonSection);
 
-    if (!toolbarButtonsPatient?.length) {
+    if (!toolbarButtons?.length) {
       return;
     }
 
-    toolbarButtonsPatient.forEach(button => {
+    toolbarButtons.forEach(button => {
       this.handleEvaluate(button.componentProps);
     });
   };

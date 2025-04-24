@@ -21,7 +21,7 @@ interface ToolbarButton {
 }
 
 interface ToolboxProps {
-  toolbarButtonsPatient: ToolbarButton[];
+  toolbarButtons: ToolbarButton[];
   numRows: number;
   title?: string;
   useCollapsedPanel?: boolean;
@@ -31,7 +31,7 @@ interface ToolboxProps {
 
 function ToolboxUI(props: ToolboxProps) {
   const {
-    toolbarButtonsPatient = [],
+    toolbarButtons = [],
     numRows,
     title,
     useCollapsedPanel = true,
@@ -44,7 +44,7 @@ function ToolboxUI(props: ToolboxProps) {
       <>
         <div className="flex flex-col">
           <div className="bg-muted mt-0.5 flex flex-wrap space-x-2 py-2 px-1">
-            {toolbarButtonsPatient.map((toolDef, index) => {
+            {toolbarButtons.map((toolDef, index) => {
               if (!toolDef) {
                 return null;
               }

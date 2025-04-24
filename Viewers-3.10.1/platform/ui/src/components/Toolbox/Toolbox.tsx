@@ -21,7 +21,7 @@ function Toolbox({
   ...props
 }: withAppTypes) {
   const { state: toolboxState, api } = useToolbox(buttonSectionId);
-  const { onInteraction, toolbarButtonsPatient } = useToolbar({
+  const { onInteraction, toolbarButtons } = useToolbar({
     servicesManager,
     buttonSection: buttonSectionId,
   });
@@ -31,7 +31,7 @@ function Toolbox({
 
   useEffect(() => {
     const currentButtonIdsStr = JSON.stringify(
-      toolbarButtonsPatient?.map(button => {
+      toolbarButtons?.map(button => {
         const { id, componentProps } = button;
         if (componentProps.items?.length) {
           return componentProps.items.map(item => `${item.id}-${item.disabled}`);
@@ -59,7 +59,7 @@ function Toolbox({
     prevButtonIdsRef.current = currentButtonIdsStr;
     prevToolboxStateRef.current = currentToolBoxStateStr;
 
-    const initializeOptionsWithEnhancements = toolbarButtonsPatient.reduce(
+    const initializeOptionsWithEnhancements = toolbarButtons.reduce(
       (accumulator, toolbarButton) => {
         const { id: buttonId, componentProps } = toolbarButton;
 
@@ -130,7 +130,7 @@ function Toolbox({
     );
 
     api.initializeToolOptions(initializeOptionsWithEnhancements);
-  }, [toolbarButtonsPatient, api, toolboxState, commandsManager, servicesManager]);
+  }, [toolbarButtons, api, toolboxState, commandsManager, servicesManager]);
 
   const handleToolOptionChange = (toolName, optionName, newValue) => {
     api.handleToolOptionChange(toolName, optionName, newValue);
@@ -146,7 +146,7 @@ function Toolbox({
     <ToolboxUI
       {...props}
       title={title}
-      toolbarButtonsPatient={toolbarButtonsPatient}
+      toolbarButtons={toolbarButtons}
       toolboxState={toolboxState}
       handleToolSelect={id => api.handleToolSelect(id)}
       handleToolOptionChange={handleToolOptionChange}

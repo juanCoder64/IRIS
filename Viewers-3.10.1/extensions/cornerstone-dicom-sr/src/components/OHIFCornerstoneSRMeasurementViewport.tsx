@@ -436,7 +436,7 @@ function _getStatusComponent({
   }
 
   const StatusArea = () => {
-    const { toolbarButtonsPatient: loadSRMeasurementsButtons, onInteraction } = useToolbar({
+    const { toolbarButtons: loadSRMeasurementsButtons, onInteraction } = useToolbar({
       servicesManager,
       buttonSection: 'loadSRMeasurements',
     });

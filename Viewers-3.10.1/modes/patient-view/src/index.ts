@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import { id } from './id';
 import initToolGroups from './initToolGroups';
-import toolbarButtonsPatient from './toolbarButtonsPatient';
+import toolbarButtons from './toolbarButtons';
 
 // Allow this mode by excluding non-imaging modalities such as SR, SEG
 // Also, SM is not a simple imaging modalities, so exclude it.
@@ -90,7 +90,7 @@ function modeFactory({ modeConfiguration }) {
       // Init Default and SR ToolGroups
       initToolGroups(extensionManager, toolGroupService, commandsManager);
 
-      toolbarService.addButtons(toolbarButtonsPatient);
+      toolbarService.addButtons(toolbarButtons);
       toolbarService.createButtonSection('primary', [
         'MeasurementTools',
         'Zoom',
@@ -258,4 +258,4 @@ const mode = {
 };
 
 export default mode;
-export { initToolGroups, toolbarButtonsPatient };
+export { initToolGroups, toolbarButtons };

@@ -19,7 +19,7 @@ export const setToolActiveToolbar = {
   },
 };
 
-const toolbarButtonsPatient: Button[] = [
+const toolbarButtons: Button[] = [
   {
     id: 'Reset',
     uiType: 'ohif.toolButton',
@@ -71,4 +71,4 @@ const toolbarButtonsPatient: Button[] = [
   },
 ];
 
-export default toolbarButtonsPatient;
+export default toolbarButtons;

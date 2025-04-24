@@ -8,7 +8,7 @@ export const setToolActiveToolbar = {
   context: 'MICROSCOPY',
 };
 
-const toolbarButtonsPatient: Button[] = [
+const toolbarButtons: Button[] = [
   {
     id: 'MeasurementTools',
     uiType: 'ohif.toolButtonList',
@@ -138,4 +138,4 @@ const toolbarButtonsPatient: Button[] = [
   },
 ];
 
-export default toolbarButtonsPatient;
+export default toolbarButtons;

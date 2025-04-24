@@ -1,7 +1,7 @@
 import { id } from './id';
 import initWorkflowSteps from './initWorkflowSteps';
 import initToolGroups from './initToolGroups';
-import toolbarButtonsPatient from './toolbarButtons';
+import toolbarButtons from './toolbarButtons';
 
 const extensionDependencies = {
   '@ohif/extension-default': '3.7.0-beta.76',
@@ -54,7 +54,7 @@ function modeFactory({ modeConfiguration }) {
       measurementService.clearMeasurements();
       initToolGroups({ toolNames, Enums, toolGroupService, commandsManager, servicesManager });
 
-      toolbarService.addButtons(toolbarButtonsPatient);
+      toolbarService.addButtons(toolbarButtons);
 
       toolbarService.createButtonSection('secondary', ['ProgressDropdown']);
 

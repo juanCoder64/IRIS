@@ -14,8 +14,8 @@ window.config = {
         initToolGroups(extensionManager, toolGroupService, commandsManager);
 
         // Get the toolbar buttons from the mode
-        const { toolbarButtonsPatient } = window.longitudinalMode;
-        toolbarService.addButtons(toolbarButtonsPatient);
+        const { toolbarButtons } = window.longitudinalMode;
+        toolbarService.addButtons(toolbarButtons);
 
         // Create a custom primary toolbar section with a different order of buttons
         toolbarService.createButtonSection('primary', [

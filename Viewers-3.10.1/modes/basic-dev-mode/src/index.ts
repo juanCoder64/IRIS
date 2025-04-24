@@ -1,4 +1,4 @@
-import toolbarButtonsPatient from './toolbarButtons';
+import toolbarButtons from './toolbarButtons';
 import { hotkeys } from '@ohif/core';
 import { id } from './id';
 import i18n from 'i18next';
@@ -94,7 +94,7 @@ function modeFactory({ modeConfiguration }) {
 
       toolGroupService.createToolGroupAndAddTools('default', tools);
 
-      toolbarService.addButtons(toolbarButtonsPatient);
+      toolbarService.addButtons(toolbarButtons);
       toolbarService.createButtonSection('primary', [
         'measurementSection',
         'Zoom',

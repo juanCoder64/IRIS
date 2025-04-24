@@ -7,7 +7,7 @@ const setToolActiveToolbar = {
   },
 };
 
-const toolbarButtonsPatient = [
+const toolbarButtons = [
   {
     id: 'MeasurementTools',
     uiType: 'ohif.toolButtonList',
@@ -297,4 +297,4 @@ const toolbarButtonsPatient = [
   },
 ];
 
-export default toolbarButtonsPatient;
+export default toolbarButtons;

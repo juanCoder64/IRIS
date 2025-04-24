@@ -2,18 +2,18 @@ import React from 'react';
 import { useToolbar } from '@ohif/core';
 
 export function Toolbar({ servicesManager, buttonSection = 'primary' }) {
-  const { toolbarButtonsPatient, onInteraction } = useToolbar({
+  const { toolbarButtons, onInteraction } = useToolbar({
     servicesManager,
     buttonSection,
   });
 
-  if (!toolbarButtonsPatient.length) {
+  if (!toolbarButtons.length) {
     return null;
   }
 
   return (
     <>
-      {toolbarButtonsPatient?.map(toolDef => {
+      {toolbarButtons?.map(toolDef => {
         if (!toolDef) {
           return null;
         }

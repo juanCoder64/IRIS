@@ -1,4 +1,4 @@
-import toolbarButtonsPatient from './toolbarButtons';
+import toolbarButtons from './toolbarButtons';
 import { id } from './id';
 import initToolGroups from './initToolGroups';
 import i18n from 'i18next';
@@ -89,8 +89,8 @@ function modeFactory() {
         '@ohif/extension-test.customizationModule.custom-context-menu',
       ]);
 
-      toolbarService.addButtons(toolbarButtonsPatient);
-      console.debug('toolbarButtonsPatient', toolbarButtonsPatient);
+      toolbarService.addButtons(toolbarButtons);
+      console.debug('toolbarButtons', toolbarButtons);
       toolbarService.createButtonSection('primary', [
         'MeasurementTools',
         'Zoom',
