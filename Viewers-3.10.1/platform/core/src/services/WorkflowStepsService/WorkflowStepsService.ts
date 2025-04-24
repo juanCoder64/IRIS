@@ -23,7 +23,7 @@ export const EVENTS = {
           id: 'firstStep',
           name: 'First Step',
           [toolbar]: {
-            buttons: firstStepToolbarButtons,
+            buttons: firstSteptoolbarButtonsPatient,
             sections: [
               {
                 key: 'primary',
@@ -62,7 +62,7 @@ type CommandCallback = {
 export type WorkflowStep = {
   id: string;
   name: string;
-  toolbarButtons?: {
+  toolbarButtonsPatient?: {
     buttonSection: string;
     buttons: string[];
   }[];
@@ -131,9 +131,9 @@ class WorkflowStepsService extends PubSubService {
 
   private _updateToolBar(workflowStep: WorkflowStep) {
     const { toolbarService } = this._servicesManager.services;
-    const { toolbarButtons } = workflowStep;
+    const { toolbarButtonsPatient } = workflowStep;
 
-    const toUse = Array.isArray(toolbarButtons) ? toolbarButtons : [toolbarButtons];
+    const toUse = Array.isArray(toolbarButtonsPatient) ? toolbarButtonsPatient : [toolbarButtonsPatient];
 
     toUse.forEach(({ buttonSection, buttons }) => {
       toolbarService.clearButtonSection(buttonSection);

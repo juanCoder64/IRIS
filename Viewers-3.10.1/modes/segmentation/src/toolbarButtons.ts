@@ -17,7 +17,7 @@ const callbacks = (toolName: string) => [
   },
 ];
 
-const toolbarButtons: Button[] = [
+const toolbarButtonsPatient: Button[] = [
   // sections
   {
     id: 'MoreTools',
@@ -609,4 +609,4 @@ const toolbarButtons: Button[] = [
   },
 ];
 
-export default toolbarButtons;
+export default toolbarButtonsPatient;

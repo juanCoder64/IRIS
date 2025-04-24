@@ -45,8 +45,8 @@ function Toolbar({ servicesManager }) {
 
   return (
     <>
-      // ToolBarService.getButtonSection('primary') to get toolbarButtons
-      {toolbarButtons.map((toolDef, index) => {
+      // ToolBarService.getButtonSection('primary') to get toolbarButtonsPatient
+      {toolbarButtonsPatient.map((toolDef, index) => {
         const { id, Component, componentProps } = toolDef;
         return (
           <Component

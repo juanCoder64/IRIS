@@ -19,7 +19,7 @@ export const setToolActiveToolbar = {
   },
 };
 
-const toolbarButtons: Button[] = [
+const toolbarButtonsPatient: Button[] = [
   // sections
   {
     id: 'MeasurementTools',
@@ -546,4 +546,4 @@ const toolbarButtons: Button[] = [
   // },
 ];
 
-export default toolbarButtons;
+export default toolbarButtonsPatient;

@@ -6,7 +6,7 @@ export function useToolbar({ buttonSection = 'primary' }: withAppTypes) {
   const { toolbarService, viewportGridService } = servicesManager.services;
   const { EVENTS } = toolbarService;
 
-  const [toolbarButtons, setToolbarButtons] = useState(
+  const [toolbarButtonsPatient, settoolbarButtonsPatient] = useState(
     toolbarService.getButtonSection(buttonSection as string)
   );
 
@@ -60,13 +60,13 @@ export function useToolbar({ buttonSection = 'primary' }: withAppTypes) {
       }
       toolbarService.recordInteraction({ ...args, ...buttonProps }, { refreshProps });
     },
-    [toolbarService, viewportGridService, toolbarButtons]
+    [toolbarService, viewportGridService, toolbarButtonsPatient]
   );
 
   // Effect to handle toolbar modification events
   useEffect(() => {
     const handleToolbarModified = () => {
-      setToolbarButtons(toolbarService.getButtonSection(buttonSection as string)?.filter(Boolean));
+      settoolbarButtonsPatient(toolbarService.getButtonSection(buttonSection as string)?.filter(Boolean));
     };
 
     const subs = [EVENTS.TOOL_BAR_MODIFIED, EVENTS.TOOL_BAR_STATE_MODIFIED].map(event => {
@@ -96,5 +96,5 @@ export function useToolbar({ buttonSection = 'primary' }: withAppTypes) {
     return () => subscriptions.forEach(sub => sub.unsubscribe());
   }, [viewportGridService, toolbarService]);
 
-  return { toolbarButtons, onInteraction };
+  return { toolbarButtonsPatient, onInteraction };
 }

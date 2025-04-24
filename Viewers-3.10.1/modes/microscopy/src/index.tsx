@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 
 import { id } from './id';
-import toolbarButtons from './toolbarButtons';
+import toolbarButtonsPatient from './toolbarButtons';
 
 const ohif = {
   layout: '@ohif/extension-default.layoutTemplateModule.viewerLayout',
@@ -47,7 +47,7 @@ function modeFactory({ modeConfiguration }) {
     onModeEnter: ({ servicesManager }: withAppTypes) => {
       const { toolbarService } = servicesManager.services;
 
-      toolbarService.addButtons(toolbarButtons);
+      toolbarService.addButtons(toolbarButtonsPatient);
       toolbarService.createButtonSection('primary', ['MeasurementTools', 'dragPan', 'TagBrowser']);
 
       toolbarService.createButtonSection('measurementSection', [

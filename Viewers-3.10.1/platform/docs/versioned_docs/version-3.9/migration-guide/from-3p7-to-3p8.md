@@ -53,7 +53,7 @@ const activateTool = () => {
 Instead, focus on defining the buttons and their placement in the toolbar using `toolbarService.addButtons()` and `toolbarService.createButtonSection()`. For example:
 
 ```javascript
-toolbarService.addButtons([...toolbarButtons, ...moreTools]);
+toolbarService.addButtons([...toolbarButtonsPatient, ...moreTools]);
 toolbarService.createButtonSection("primary", [
   "MeasurementTools",
   "Zoom",
@@ -125,12 +125,12 @@ Add the appropriate `evaluate` property to each button definition. For example:
    - Use `evaluate.cornerstoneTool` if the button should be highlighted only when it is the active primary tool (left mouse).
 	- Use `evaluate.cornerstoneTool.toggle` if the tool is a toggle tool (like reference lines or image overlay).
 
-Refer to the `modes/longitudinal/src/toolbarButtons.ts` file for examples of using the `evaluate` property.
+Refer to the `modes/longitudinal/src/toolbarButtonsPatient.ts` file for examples of using the `evaluate` property.
 
 Additional Resources
 
   - For more information on the new toolbar module and its usage, refer to the [Toolbar documentation](../platform/extensions/modules/toolbar.md).
-  - Consult the updated button definitions in `modes/longitudinal/src/toolbarButtons.ts` for examples of the new object-based button definition format and the usage of evaluators.
+  - Consult the updated button definitions in `modes/longitudinal/src/toolbarButtonsPatient.ts` for examples of the new object-based button definition format and the usage of evaluators.
 
 ### Tool listeners
 

@@ -17,7 +17,7 @@ function usePrevious(value) {
  */
 function ToolboxUI(props: withAppTypes) {
   const {
-    toolbarButtons,
+    toolbarButtonsPatient,
     handleToolSelect,
     toolboxState,
     numRows,
@@ -55,7 +55,7 @@ function ToolboxUI(props: withAppTypes) {
       <>
         <div className="flex flex-col bg-black">
           <div className="bg-primary-dark mt-0.5 flex flex-wrap py-2">
-            {toolbarButtons?.map((toolDef, index) => {
+            {toolbarButtonsPatient?.map((toolDef, index) => {
               if (!toolDef) {
                 return null;
               }

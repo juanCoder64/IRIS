@@ -649,7 +649,7 @@ onModeEnter: ({ servicesManager, extensionManager, commandsManager }) => {
   // Init tool groups (see cornerstone3D for more details)
   initToolGroups(extensionManager, toolGroupService, commandsManager);
 
-  toolbarService.addButtons(toolbarButtons);
+  toolbarService.addButtons(toolbarButtonsPatient);
   toolbarService.createButtonSection('primary', [
     'MeasurementTools',
     'Zoom',

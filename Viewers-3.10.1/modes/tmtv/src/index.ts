@@ -1,5 +1,5 @@
 import { classes } from '@ohif/core';
-import toolbarButtons from './toolbarButtons';
+import toolbarButtonsPatient from './toolbarButtons';
 import { id } from './id.js';
 import initToolGroups from './initToolGroups.js';
 import setCrosshairsConfiguration from './utils/setCrosshairsConfiguration.js';
@@ -88,7 +88,7 @@ function modeFactory({ modeConfiguration }) {
       );
 
       unsubscriptions.push(unsubscribe);
-      toolbarService.addButtons(toolbarButtons);
+      toolbarService.addButtons(toolbarButtonsPatient);
       toolbarService.createButtonSection('primary', [
         'MeasurementTools',
         'Zoom',

@@ -56,7 +56,7 @@ function modeFactory() {
       // Init Default and SR ToolGroups
       initToolGroups(extensionManager, ToolGroupService);
 
-      ToolBarService.addButtons(toolbarButtons);
+      ToolBarService.addButtons(toolbarButtonsPatient);
       ToolBarService.createButtonSection('primary', [
         'MeasurementTools',
         'Zoom',

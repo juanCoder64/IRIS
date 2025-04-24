@@ -29,19 +29,19 @@ export default function ToolButtonListWrapper({
   groupId,
   buttonSection,
 }: ToolButtonListWrapperProps) {
-  const { onInteraction, toolbarButtons } = useToolbar({
+  const { onInteraction, toolbarButtonsPatient } = useToolbar({
     buttonSection,
   });
 
-  if (!toolbarButtons?.length) {
+  if (!toolbarButtonsPatient?.length) {
     return null;
   }
 
   const primary =
-    toolbarButtons.find(button => button.componentProps.isActive)?.componentProps ||
-    toolbarButtons[0].componentProps;
+    toolbarButtonsPatient.find(button => button.componentProps.isActive)?.componentProps ||
+    toolbarButtonsPatient[0].componentProps;
 
-  const items = toolbarButtons.map(button => button.componentProps);
+  const items = toolbarButtonsPatient.map(button => button.componentProps);
 
   return (
     <ToolButtonList>

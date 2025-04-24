@@ -26,7 +26,7 @@ export function Toolbox({ buttonSectionId, title }: { buttonSectionId: string; t
   const { toolbarService, customizationService } = servicesManager.services;
   const [showConfig, setShowConfig] = useState(false);
 
-  const { toolbarButtons: toolboxSections, onInteraction } = useToolbar({
+  const { toolbarButtonsPatient: toolboxSections, onInteraction } = useToolbar({
     servicesManager,
     buttonSection: buttonSectionId,
   });

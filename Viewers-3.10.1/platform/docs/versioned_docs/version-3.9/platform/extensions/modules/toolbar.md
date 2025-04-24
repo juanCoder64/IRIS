@@ -198,7 +198,7 @@ Providing just the components is not enough. You need to add the buttons to the 
 
 Below we can see a simplified version of the `longitudinal` (basic viewer) mode that shows how
 a mode can add buttons to the toolbar by calling
-`ToolBarService.addButtons(toolbarButtons)`. `toolbarButtons` is an array of
+`ToolBarService.addButtons(toolbarButtonsPatient)`. `toolbarButtonsPatient` is an array of
 `toolDefinitions` which we will learn next.
 
 ```js
@@ -210,7 +210,7 @@ function modeFactory({ modeConfiguration }) {
     onModeEnter: ({ servicesManager, extensionManager }) => {
       const { toolBarService } = servicesManager.services;
 
-      toolbarService.addButtons([...toolbarButtons, ...moreTools]);
+      toolbarService.addButtons([...toolbarButtonsPatient, ...moreTools]);
       toolbarService.createButtonSection('primary', [
         'MeasurementTools',
         'Zoom',
@@ -258,12 +258,12 @@ By default we use `@ohif/extension-default.layoutTemplateModule.viewerLayout` to
 In your UI component, such as panels, you have the option to include a toolbar section template.
 This allows you to easily add buttons to it later on. To ensure that the buttons are added properly
 to the toolbar, respond to interactions correctly, and evaluate states accurately, simply utilize the `useToolbar` hook.
-This hook grants you access to the `onInteraction` function and the `toolbarButtons` array, which you can customize within your UI as needed.
+This hook grants you access to the `onInteraction` function and the `toolbarButtonsPatient` array, which you can customize within your UI as needed.
 
 ```js
 
 function myCustomPanel({servicesManager}){
-  const { onInteraction, toolbarButtons } = useToolbar({
+  const { onInteraction, toolbarButtonsPatient } = useToolbar({
     servicesManager,
     buttonSection: 'myCustomSectionName'
   });
@@ -271,7 +271,7 @@ function myCustomPanel({servicesManager}){
   // map the buttons to the UI
   return (
     <div>
-      {toolbarButtons.map((button, index) => {
+      {toolbarButtonsPatient.map((button, index) => {
         return (
           <button
             key={index}
@@ -318,7 +318,7 @@ Then in your modes you can edit the tools in that button section.
 onModeEnter: ({ servicesManager, extensionManager }) => {
   const { toolBarService } = servicesManager.services;
 
-  toolbarService.addButtons([...toolbarButtons, ...moreTools]);
+  toolbarService.addButtons([...toolbarButtonsPatient, ...moreTools]);
   toolbarService.createButtonSection('customButtonSection', [
     'MeasurementTools',
     'Zoom',

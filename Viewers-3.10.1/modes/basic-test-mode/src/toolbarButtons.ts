@@ -49,7 +49,7 @@ const ReferenceLinesListeners = [
   },
 ];
 
-const toolbarButtons: Button[] = [
+const toolbarButtonsPatient: Button[] = [
   {
     id: 'MeasurementTools',
     uiType: 'ohif.toolButtonList',
@@ -506,4 +506,4 @@ const toolbarButtons: Button[] = [
   },
 ];
 
-export default toolbarButtons;
+export default toolbarButtonsPatient;

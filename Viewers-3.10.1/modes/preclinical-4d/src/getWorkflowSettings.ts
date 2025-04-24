@@ -56,7 +56,7 @@ function getWorkflowSettings({ servicesManager }) {
             left: defaultLeftPanel,
           },
         },
-        toolbarButtons: defaultButtons,
+        toolbarButtonsPatient: defaultButtons,
         hangingProtocol: {
           protocolId: 'default4D',
           stageId: 'dataPreparation',
@@ -67,7 +67,7 @@ function getWorkflowSettings({ servicesManager }) {
         id: 'registration',
         name: 'Registration',
         layout: defaultLayout,
-        toolbarButtons: defaultButtons,
+        toolbarButtonsPatient: defaultButtons,
         hangingProtocol: {
           protocolId: 'default4D',
           stageId: 'registration',
@@ -87,7 +87,7 @@ function getWorkflowSettings({ servicesManager }) {
             rightPanelClosed: false,
           },
         },
-        toolbarButtons: [...defaultButtons, ...ROIThresholdToolbox],
+        toolbarButtonsPatient: [...defaultButtons, ...ROIThresholdToolbox],
         hangingProtocol: {
           protocolId: 'default4D',
           stageId: 'roiQuantification',
@@ -98,7 +98,7 @@ function getWorkflowSettings({ servicesManager }) {
         id: 'kineticAnalysis',
         name: 'Kinetic Analysis',
         layout: defaultLayout,
-        toolbarButtons: defaultButtons,
+        toolbarButtonsPatient: defaultButtons,
         hangingProtocol: {
           protocolId: 'default4D',
           stageId: 'kineticAnalysis',

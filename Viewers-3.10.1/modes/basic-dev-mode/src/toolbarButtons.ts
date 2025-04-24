@@ -8,7 +8,7 @@ export const setToolActiveToolbar = {
   context: 'CORNERSTONE',
 };
 
-const toolbarButtons: Button[] = [
+const toolbarButtonsPatient: Button[] = [
   // sections
   {
     id: 'measurementSection',
@@ -238,4 +238,4 @@ const toolbarButtons: Button[] = [
   },
 ];
 
-export default toolbarButtons;
+export default toolbarButtonsPatient;

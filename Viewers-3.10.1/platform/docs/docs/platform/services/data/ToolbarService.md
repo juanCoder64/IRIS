@@ -40,7 +40,7 @@ The `ToolBarService` is a straightforward service designed to handle the toolbar
 
 ### Basic
 
-The simplest toolbarButtons definition has the following properties:
+The simplest toolbarButtonsPatient definition has the following properties:
 
 ![toolbarModule-zoom](../../../assets/img/toolbarModule-zoom.png)
 
@@ -88,7 +88,7 @@ to create `MeasurementTools` nested button
 
 ![toolbarModule-nested-buttons](../../../assets/img/toolbarModule-nested-buttons.png)
 
-```js title="modes/longitudinal/src/toolbarButtons.js"
+```js title="modes/longitudinal/src/toolbarButtonsPatient.js"
 {
     id: 'MeasurementTools',
     uiType: 'ohif.splitButton',
@@ -236,7 +236,7 @@ For instance in `longitudinal` mode we are using the `onModeEnter` hook to
 add the buttons to the toolbarService and assign them to the primary section.
 
 ```js title="modes/longitudinal/src/index.js"
-toolbarService.addButtons([...toolbarButtons, ...moreTools]);
+toolbarService.addButtons([...toolbarButtonsPatient, ...moreTools]);
 toolbarService.createButtonSection('primary', [
   'MeasurementTools',
   'Zoom',

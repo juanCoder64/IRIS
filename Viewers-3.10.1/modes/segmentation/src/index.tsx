@@ -1,5 +1,5 @@
 import { id } from './id';
-import toolbarButtons from './toolbarButtons';
+import toolbarButtonsPatient from './toolbarButtons';
 import initToolGroups from './initToolGroups';
 
 const ohif = {
@@ -61,7 +61,7 @@ function modeFactory({ modeConfiguration }) {
       // Init Default and SR ToolGroups
       initToolGroups(extensionManager, toolGroupService, commandsManager);
 
-      toolbarService.addButtons(toolbarButtons);
+      toolbarService.addButtons(toolbarButtonsPatient);
 
       toolbarService.createButtonSection('primary', [
         'WindowLevel',

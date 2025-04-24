@@ -16,7 +16,7 @@ The anatomy of a workflow step refers to the different components or properties 
 - `name`: A human-readable name or title for the step, which can be displayed in the user interface to help users understand the current stage of the workflow.
 - `hangingProtocol`:  The hanging protocol configuration specifies the protocol and stage ID to be used for displaying the images. This ensures that the appropriate data viewports and presentation are used for the current workflow step.
 - `layout`: The layout configuration defines the arrangement and visibility of various panels or viewports within the application's user interface for the specific step. This can include specifying which panels should be visible on the left or right side of the screen, as well as any options for panel visibility or behavior.
-- `toolbarButtons`: Each step can define a set of toolbar buttons that should be available and displayed in the application's toolbar during that step. Remember the button definitions should already be registered to toolbarService beforehand, here we are just referencing the buttons id in each section.
+- `toolbarButtonsPatient`: Each step can define a set of toolbar buttons that should be available and displayed in the application's toolbar during that step. Remember the button definitions should already be registered to toolbarService beforehand, here we are just referencing the buttons id in each section.
 - `info` : An optional description or additional information about the current workflow step can be provided. which
 will be displayed as tooltip in the UI.
 
@@ -52,7 +52,7 @@ const steps = [
         left: [dynamicVolume.leftPanel],
       },
     },
-    toolbarButtons: {
+    toolbarButtonsPatient: {
       buttonSection: "primary",
       buttons: ["MeasurementTools", "Zoom", "WindowLevel", "Crosshairs", "Pan"],
     },
@@ -77,7 +77,7 @@ const steps = [
         rightPanelClosed: false,
       },
     },
-    toolbarButtons: [
+    toolbarButtonsPatient: [
       {
         buttonSection: "primary",
         buttons: [
@@ -108,7 +108,7 @@ const steps = [
         right: [],
       },
     },
-    toolbarButtons: {
+    toolbarButtonsPatient: {
       buttonSection: "primary",
       buttons: ["MeasurementTools", "Zoom", "WindowLevel", "Crosshairs", "Pan"],
     },
