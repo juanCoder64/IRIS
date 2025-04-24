@@ -20,8 +20,8 @@ function ViewerLayout({
   // From Modes
   viewports,
   ViewportGridComp,
-  leftPanelClosed = false,
-  rightPanelClosed = false,
+  leftPanelClosed = true,
+  rightPanelClosed = true,
   leftPanelResizable = false,
   rightPanelResizable = false,
 }: withAppTypes): React.FunctionComponent {

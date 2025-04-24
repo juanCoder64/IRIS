@@ -10,30 +10,30 @@ import { TooltipTrigger, TooltipContent, Tooltip } from '../Tooltip';
  * Display a thumbnail for a display set.
  */
 const Thumbnail = ({
-  displaySetInstanceUID,
-  className,
-  imageSrc,
-  imageAltText,
-  description,
-  seriesNumber,
-  numInstances,
-  loadingProgress,
-  countIcon,
-  messages,
-  isActive,
-  onClick,
-  onDoubleClick,
-  thumbnailType,
-  modality,
-  viewPreset = 'thumbnails',
-  isHydratedForDerivedDisplaySet = false,
-  isTracked = false,
-  canReject = false,
-  dragData = {},
-  onReject = () => {},
-  onClickUntrack = () => {},
-  ThumbnailMenuItems = () => {},
-}: withAppTypes): React.ReactNode => {
+                     displaySetInstanceUID,
+                     className,
+                     imageSrc,
+                     imageAltText,
+                     description,
+                     seriesNumber,
+                     numInstances,
+                     loadingProgress,
+                     countIcon,
+                     messages,
+                     isActive,
+                     onClick,
+                     onDoubleClick,
+                     thumbnailType,
+                     modality,
+                     viewPreset = 'thumbnails',
+                     isHydratedForDerivedDisplaySet = false,
+                     isTracked = false,
+                     canReject = false,
+                     dragData = {},
+                     onReject = () => {},
+                     onClickUntrack = () => {},
+                     ThumbnailMenuItems = () => {},
+                   }: withAppTypes): React.ReactNode => {
   // TODO: We should wrap our thumbnail to create a "DraggableThumbnail", as
   // this will still allow for "drag", even if there is no drop target for the
   // specified item.
@@ -63,7 +63,7 @@ const Thumbnail = ({
       <div
         className={classnames(
           'flex h-full w-full flex-col items-center justify-center gap-[2px] p-[4px]',
-          isActive && 'bg-popover rounded'
+          isActive && 'bg-[#008959] rounded'
         )}
       >
         <div className="h-[114px] w-[128px]">
@@ -84,7 +84,7 @@ const Thumbnail = ({
               <div
                 className={classnames(
                   'h-[10px] w-[10px] rounded-[2px]',
-                  isActive || isHydratedForDerivedDisplaySet ? 'bg-highlight' : 'bg-primary/65',
+                  isActive || isHydratedForDerivedDisplaySet ? 'bg-secondary-main' : 'bg-secondary-main',
                   loadingProgress && loadingProgress < 1 && 'bg-primary/25'
                 )}
               ></div>
@@ -114,11 +114,11 @@ const Thumbnail = ({
                         <Icons.InfoLink className="text-primary" />
                       </div>
                       <div className="flex flex-1 flex-col">
-                        <span>
-                          <span className="text-white">
-                            {isTracked ? 'Series is tracked' : 'Series is untracked'}
-                          </span>
-                        </span>
+	                        <span>
+	                          <span className="text-white">
+	                            {isTracked ? 'Series is tracked' : 'Series is untracked'}
+	                          </span>
+	                        </span>
                       </div>
                     </div>
                   </TooltipContent>
@@ -145,8 +145,8 @@ const Thumbnail = ({
             </TooltipTrigger>
           </Tooltip>
           <div className="flex h-[12px] items-center gap-[7px] overflow-hidden">
-            <div className="text-muted-foreground pl-1 text-[11px]"> S:{seriesNumber}</div>
-            <div className="text-muted-foreground text-[11px]">
+            <div className="text-black pl-1 text-[11px]"> S:{seriesNumber}</div>
+            <div className="text-black text-[11px]">
               <div className="flex items-center gap-[4px]">
                 {countIcon ? (
                   React.createElement(Icons[countIcon] || Icons.MissingIcon, { className: 'w-3' })
@@ -167,15 +167,16 @@ const Thumbnail = ({
       <div
         className={classnames(
           'flex h-full w-full items-center justify-between pr-[8px] pl-[8px] pt-[4px] pb-[4px]',
-          isActive && 'bg-popover rounded'
+          isActive && 'bg-popover rounded',
+          !isActive && 'rounded bg-gray-700 hover:bg-gray-600'
         )}
       >
         <div className="relative flex h-[32px] w-full items-center gap-[8px] overflow-hidden">
           <div
             className={classnames(
               'h-[32px] w-[4px] min-w-[4px] rounded',
-              isActive || isHydratedForDerivedDisplaySet ? 'bg-highlight' : 'bg-primary/65',
-              loadingProgress && loadingProgress < 1 && 'bg-primary/25'
+              isActive || isHydratedForDerivedDisplaySet ? 'bg-highlight' : 'bg-secondary-main',
+              loadingProgress && loadingProgress < 1 && 'bg-secondary-main'
             )}
           ></div>
           <div className="flex h-full w-[calc(100%-12px)] flex-col justify-start">
@@ -229,11 +230,11 @@ const Thumbnail = ({
                     <Icons.InfoLink className="text-primary" />
                   </div>
                   <div className="flex flex-1 flex-col">
-                    <span>
-                      <span className="text-white">
-                        {isTracked ? 'Series is tracked' : 'Series is untracked'}
-                      </span>
-                    </span>
+	                    <span>
+	                      <span className="text-white">
+	                        {isTracked ? 'Series is tracked' : 'Series is untracked'}
+	                      </span>
+	                    </span>
                   </div>
                 </div>
               </TooltipContent>
@@ -253,7 +254,7 @@ const Thumbnail = ({
     <div
       className={classnames(
         className,
-        'bg-muted hover:bg-primary/30 group flex cursor-pointer select-none flex-col rounded outline-none',
+        'bg-white hover:bg-[#BBBBBB] group flex cursor-pointer select-none flex-col rounded outline-none',
         viewPreset === 'thumbnails' && 'h-[170px] w-[135px]',
         viewPreset === 'list' && 'h-[40px] w-full'
       )}
